@@ -66,8 +66,8 @@ properties['Average_price'] = pd.to_numeric(properties['Average_price'])
 
 # 2.5 Cleaning the data (Part 3)
 # Since there are only 32 London boroughs, check out the unique values of 
-#the 'London_Borough' column to see if they're all there.
-#unique = properties['London_Borough'].unique()
+# the 'London_Borough' column to see if they're all there.
+# unique = properties['London_Borough'].unique()
 #print(unique)
 
 # Filtering the data with NaN values
@@ -91,10 +91,12 @@ df = propertiesD[~propertiesD.London_Borough.isin(nonBoroughs)]
 #print(df.dtypes)
 
 # 2.6 Visualizing the data
-# camden_prices = df[df['London_Borough'] == 'Camden']
-# ax = camden_prices.plot(kind = 'line', x = 'Month', y = 'Average_price')
-# ax.set_ylabel('Price')
-# plt.show()
+camden_prices = df[df['London_Borough'] == 'Hounslow']
+#camden_prices = df[df['London_Borough'] == 'Barking & Dagenham']
+#ax = camden_prices.plot(kind = 'line', x = 'Month', y = 'Average_price')
+#plt.title('Hounslow')
+#ax.set_ylabel('Price')
+#plt.show()
 
 # To limit the amount of temporal data-points, it's useful 
 # to extract the year from every value in your Month column.
@@ -125,7 +127,7 @@ def create_price_ratio(d):
     return ratio
 
 # test the function:
-# print(create_price_ratio(df[df['London_Borough']=='Barking & Dagenham']))
+#print(create_price_ratio(df[df['London_Borough']=='Hounslow']))
 
 # Store ratios for each unique London_Borough:
 final = {}
@@ -147,10 +149,11 @@ df.rename(columns={'index':'Borough', 0:'2018'}, inplace=True)
 # print(df)
 
 # Sort in descending order and select the top 15 boroughs
-top15 = df.sort_values(by='2018',ascending=False).head(15)
-# print(top15)
+top15 = df.sort_values(by='2018',ascending=False)
+print(top15.head(32))
 
 # Plot the boroughs that have seen the greatest changes in price
 ax = top15[['Borough','2018']].plot(kind='bar')
 ax.set_xticklabels(top15.Borough)
-#plt.show()
+plt.title('1998/2018 Price Ratio for London Boroughs')
+plt.show()
